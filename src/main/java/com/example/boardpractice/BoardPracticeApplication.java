@@ -1,13 +1,13 @@
-package com.example.boradpractice;
+package com.example.boardpractice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BoradPracticeApplication {
+public class BoardPracticeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BoradPracticeApplication.class, args);
+		SpringApplication.run(BoardPracticeApplication.class, args);
 	}
 
 }
