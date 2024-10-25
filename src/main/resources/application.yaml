@@ -15,7 +15,6 @@ spring:
     password: "0000"
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
     hibernate.ddl-auto: create
     show-sql: true
