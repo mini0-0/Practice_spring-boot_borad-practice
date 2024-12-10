@@ -1,4 +1,8 @@
 HELP.md
+
+### Querydsl
+/src/main/generated
+
 .idea/
 .jpb/
 # Created by https://www.toptal.com/developers/gitignore/api/java,gradle,intellij+all,windows,macos,visualstudiocode
