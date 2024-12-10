@@ -25,8 +25,6 @@ public class ArticleComment extends AuditingFields{
     @Setter @ManyToOne(optional = false) private UserAccount userAccount;
     @Setter @Column(nullable = false, length = 500) private String content;
 
-
-
     protected ArticleComment() {
 
     }
