@@ -27,16 +27,11 @@ public class Article extends AuditingFields{
     @Setter @ManyToOne(optional = false) private UserAccount userAccount;
 
 
-    @Setter
-    @Column(nullable = false)
-    private String title;
+    @Setter @Column(nullable = false) private String title;
 
-    @Setter
-    @Column(nullable = false, length = 10000)
-    private String content;
+    @Setter @Column(nullable = false, length = 10000) private String content;
 
-    @Setter
-    private String hashtag;
+    @Setter private String hashtag;
 
     @ToString.Exclude
     @OrderBy("createdAt DESC")

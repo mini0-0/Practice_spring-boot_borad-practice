@@ -22,7 +22,7 @@ class JpaRepositoryTest {
     private final ArticleCommentRepository articleCommentRepository;
     private final UserAccountRepository userAccountRepository;
 
-    JpaRepositoryTest(
+    public JpaRepositoryTest(
             @Autowired ArticleRepository articleRepository,
             @Autowired ArticleCommentRepository articleCommentRepository,
             @Autowired UserAccountRepository userAccountRepository
@@ -43,7 +43,7 @@ class JpaRepositoryTest {
         // Then
         assertThat(articles)
                 .isNotNull()
-                .hasSize(0); // classpath:resources/data.sql 참조
+                .hasSize(123); // classpath:resources/data.sql 참조
     }
 
     @DisplayName("insert 테스트")
@@ -92,42 +92,5 @@ class JpaRepositoryTest {
         assertThat(articleRepository.count()).isEqualTo(previousArticleCount - 1);
         assertThat(articleCommentRepository.count()).isEqualTo(previousArticleCommentCount - deletedCommentsSize);
     }
-
-
-//    @DisplayName("update 테스트")
-//    @Test
-//    void givenTestData_whenUpdating_thenWorksFine() {
-//        // Given
-//        Article savedArticle = articleRepository.save(Article.of("new article", "new content", "#spring"));
-//        Long articleId = savedArticle.getId(); // 저장된 id 가져오기
-//        String updatedHashtag = "#SpringBoot";
-//
-//        // When
-//        Article article = articleRepository.findById(articleId).orElseThrow();
-//        article.setHashtag(updatedHashtag);
-//        Article updatedArticle = articleRepository.saveAndFlush(article);
-//
-//        // Then
-//        assertThat(updatedArticle).hasFieldOrPropertyWithValue("hashtag", updatedHashtag);
-//    }
-//
-//    @DisplayName("delete 테스트")
-//    @Test
-//    void givenTestData_whenDeleting_thenWorksFine() {
-//        // Given
-//        Article savedArticle = articleRepository.save(Article.of("new article", "new content", "#spring"));
-//        Long articleId = savedArticle.getId(); // 저장된 id 가져오기
-//        long previousArticleCount = articleRepository.count();
-//        long previousArticleCommentCount = articleCommentRepository.count();
-//        int deletedCommentsSize = savedArticle.getArticleComments().size();
-//
-//        // When
-//        Article article = articleRepository.findById(articleId).orElseThrow();
-//        articleRepository.delete(article);
-//
-//        // Then
-//        assertThat(articleRepository.count()).isEqualTo(previousArticleCount - 1);
-//        assertThat(articleCommentRepository.count()).isEqualTo(previousArticleCommentCount - deletedCommentsSize);
-//    }
 
 }
