@@ -2,10 +2,6 @@ package com.example.boardpractice.dto;
 
 import com.example.boardpractice.domain.Article;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-
 import java.time.LocalDateTime;
 
 public record ArticleDto(
