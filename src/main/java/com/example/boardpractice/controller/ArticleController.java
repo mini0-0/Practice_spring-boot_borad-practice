@@ -40,6 +40,7 @@ public class ArticleController {
 
         map.addAttribute("articles", articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from));
         map.addAttribute("paginationBarNumbers", barNumbers);
+        map.addAttribute("searchType", SearchType.values());
 
         return "articles/index";
     }
@@ -49,6 +50,7 @@ public class ArticleController {
         ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticle(articleId));
         map.addAttribute("article", article);
         map.addAttribute("articleComments", article.articleCommentsResponse());
+        map.addAttribute("totalCount", articleService.getArticleCount());
 
         return "articles/detail";
     }
