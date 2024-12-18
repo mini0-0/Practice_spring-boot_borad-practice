@@ -11,8 +11,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
-
 @Import(SecurityConfig.class)
 @WebMvcTest(MainController.class)
 class MainControllerTest {
@@ -33,6 +31,6 @@ class MainControllerTest {
                 .andExpect(view().name("forward:/articles"))
                 .andExpect(forwardedUrl("/articles"))
                 .andDo(MockMvcResultHandlers.print());
-
     }
+
 }
