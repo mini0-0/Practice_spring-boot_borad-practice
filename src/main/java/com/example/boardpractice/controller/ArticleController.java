@@ -1,9 +1,8 @@
 package com.example.boardpractice.controller;
 
-import com.example.boardpractice.domain.type.SearchType;
+import com.example.boardpractice.domain.constant.SearchType;
 import com.example.boardpractice.dto.response.ArticleResponse;
 import com.example.boardpractice.dto.response.ArticleWithCommentsResponse;
-import com.example.boardpractice.repository.ArticleRepository;
 import com.example.boardpractice.service.ArticleService;
 import com.example.boardpractice.service.PaginationService;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +46,7 @@ public class ArticleController {
 
     @GetMapping("/{articleId}")
     public String article(@PathVariable Long articleId, ModelMap map) {
-        ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticle(articleId));
+        ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticleWithComments(articleId));
         map.addAttribute("article", article);
         map.addAttribute("articleComments", article.articleCommentsResponse());
         map.addAttribute("totalCount", articleService.getArticleCount());
