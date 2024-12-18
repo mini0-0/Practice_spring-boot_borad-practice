@@ -16,12 +16,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Map;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 @DisplayName("View 컨트롤러 - 댓글")
 @Import({SecurityConfig.class, FormDataEncoder.class})
@@ -43,7 +44,7 @@ class ArticleCommentControllerTest {
 
     @DisplayName("[view][POST] 댓글 등록 - 정상 호출")
     @Test
-    void givenArticleCommentInfo_whenRequesting_thenSqvesNewArticleComment() throws Exception {
+    void givenArticleCommentInfo_whenRequesting_thenSavesNewArticleComment() throws Exception {
         // Given
         long articleId = 1L;
         ArticleCommentRequest request = ArticleCommentRequest.of(articleId, "test comment");
@@ -51,7 +52,7 @@ class ArticleCommentControllerTest {
 
         // When & Then
         mvc.perform(
-                post("/commets/new")
+                post("/comments/new")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .content(formDataEncoder.encode(request))
                         .with(csrf())
