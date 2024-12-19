@@ -1,5 +1,9 @@
 package com.example.boardpractice.config;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
 import com.example.boardpractice.dto.UserAccountDto;
 import com.example.boardpractice.repository.UserAccountRepository;
 import com.example.boardpractice.security.BoardPrincipal;
@@ -49,4 +53,6 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
 }
+

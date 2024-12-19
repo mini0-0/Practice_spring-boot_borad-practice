@@ -4,6 +4,7 @@ import com.example.boardpractice.dto.ArticleCommentDto;
 
 import java.time.LocalDateTime;
 
+
 public record ArticleCommentResponse(
         Long id,
         String content,
