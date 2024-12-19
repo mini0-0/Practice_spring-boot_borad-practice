@@ -269,6 +269,7 @@ class ArticleServiceTest {
         then(articleRepository).should().findAllDistinctHashtags();
     }
 
+
     private UserAccount createUserAccount() {
         return UserAccount.of(
                 "rose",

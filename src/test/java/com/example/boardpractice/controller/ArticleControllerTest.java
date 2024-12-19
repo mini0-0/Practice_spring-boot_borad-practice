@@ -41,7 +41,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @DisplayName("View 컨트롤러 - 게시글")
 @Import({TestSecurityConfig.class, FormDataEncoder.class})
 @WebMvcTest(ArticleController.class)
@@ -300,7 +299,7 @@ class ArticleControllerTest {
                 .andExpect(model().attribute("formStatus", FormStatus.UPDATE));
         then(articleService).should().getArticle(articleId);
     }
-
+    
     @WithUserDetails(value = "roseTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("[view][POST] 게시글 수정 - 정상 호출")
     @Test
@@ -322,7 +321,7 @@ class ArticleControllerTest {
                 .andExpect(redirectedUrl("/articles/" + articleId));
         then(articleService).should().updateArticle(eq(articleId), any(ArticleDto.class));
     }
-
+    
     @WithUserDetails(value = "roseTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("[view][POST] 게시글 삭제 - 정상 호출")
     @Test

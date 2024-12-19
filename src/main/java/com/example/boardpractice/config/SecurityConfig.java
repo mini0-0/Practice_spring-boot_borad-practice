@@ -1,6 +1,9 @@
 package com.example.boardpractice.config;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 import com.example.boardpractice.dto.UserAccountDto;
 import com.example.boardpractice.repository.UserAccountRepository;
 import com.example.boardpractice.security.BoardPrincipal;
@@ -14,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
 @Configuration
 public class SecurityConfig {
 
