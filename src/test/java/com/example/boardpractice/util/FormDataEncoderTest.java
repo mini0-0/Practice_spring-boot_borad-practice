@@ -1,5 +1,6 @@
 package com.example.boardpractice.util;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("테스트 도구 - Form 데이터 인코더")
 @Import({FormDataEncoder.class, ObjectMapper.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = Void.class)
-public class FormDataEncoderTest {
+class FormDataEncoderTest {
 
     private final FormDataEncoder formDataEncoder;
 
@@ -43,16 +44,17 @@ public class FormDataEncoderTest {
         String result = formDataEncoder.encode(obj);
 
         // Then
-        assertThat(result).isEqualTo("str=This%20'is'%20%22test%22%20string." +
-                "&listStr1=%5Bhello,my,friend%5D" +
-                "&listStr2=hello,my,friend" +
-                "&nullStr" +
-                "&number=1234" +
-                "&floatingNumber=3.14" +
-                "&bool=false" +
-                "&bigDecimal=10" +
-                "&testEnum=THREE");
-
+        assertThat(result).isEqualTo(
+                "str=This%20'is'%20%22test%22%20string." +
+                        "&listStr1=%5Bhello,my,friend%5D" +
+                        "&listStr2=hello,my,friend" +
+                        "&nullStr" +
+                        "&number=1234" +
+                        "&floatingNumber=3.14" +
+                        "&bool=false" +
+                        "&bigDecimal=10" +
+                        "&testEnum=THREE"
+        );
     }
 
     record TestObject(
@@ -65,7 +67,7 @@ public class FormDataEncoderTest {
             Boolean bool,
             BigDecimal bigDecimal,
             TestEnum testEnum
-    ){}
+    ) {}
 
     enum TestEnum {
         ONE, TWO, THREE
