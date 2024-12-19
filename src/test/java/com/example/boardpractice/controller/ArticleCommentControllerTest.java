@@ -1,6 +1,7 @@
 package com.example.boardpractice.controller;
 
 import com.example.boardpractice.config.SecurityConfig;
+import com.example.boardpractice.config.TestSecurityConfig;
 import com.example.boardpractice.dto.ArticleCommentDto;
 import com.example.boardpractice.dto.request.ArticleCommentRequest;
 import com.example.boardpractice.service.ArticleCommentService;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 @DisplayName("View 컨트롤러 - 댓글")
-@Import({SecurityConfig.class, FormDataEncoder.class})
+@Import({TestSecurityConfig.class, FormDataEncoder.class})
 @WebMvcTest(ArticleCommentController.class)
 class ArticleCommentControllerTest {
 
@@ -70,7 +71,8 @@ class ArticleCommentControllerTest {
         // Given
         long articleId = 1L;
         long articleCommentId = 1L;
-        willDoNothing().given(articleCommentService).deleteArticleComment(articleCommentId);
+        String userId = "roseTest";
+        willDoNothing().given(articleCommentService).deleteArticleComment(articleCommentId, userId);
 
         // When & Then
         mvc.perform(
@@ -82,7 +84,7 @@ class ArticleCommentControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/articles/" + articleId))
                 .andExpect(redirectedUrl("/articles/" + articleId));
-        then(articleCommentService).should().deleteArticleComment(articleCommentId);
+        then(articleCommentService).should().deleteArticleComment(articleCommentId, userId);
     }
 
 }
