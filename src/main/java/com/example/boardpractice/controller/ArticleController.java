@@ -2,7 +2,6 @@ package com.example.boardpractice.controller;
 
 import com.example.boardpractice.domain.constant.FormStatus;
 import com.example.boardpractice.domain.constant.SearchType;
-import com.example.boardpractice.dto.UserAccountDto;
 import com.example.boardpractice.dto.request.ArticleRequest;
 import com.example.boardpractice.dto.response.ArticleResponse;
 import com.example.boardpractice.dto.response.ArticleWithCommentsResponse;
