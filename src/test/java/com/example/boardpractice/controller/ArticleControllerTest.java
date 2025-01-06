@@ -48,10 +48,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ArticleControllerTest {
 
     private final MockMvc mvc;
+
     private final FormDataEncoder formDataEncoder;
 
     @MockBean private ArticleService articleService;
     @MockBean private PaginationService paginationService;
+
 
     ArticleControllerTest(
             @Autowired MockMvc mvc,
@@ -64,7 +66,7 @@ class ArticleControllerTest {
 
     @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 정상 호출")
     @Test
-    public void givenNothing_whenRequestingArticlesView_thenReturnsArticlesView() throws Exception {
+    void givenNothing_whenRequestingArticlesView_thenReturnsArticlesView() throws Exception {
         // Given
         given(articleService.searchArticles(eq(null), eq(null), any(Pageable.class))).willReturn(Page.empty());
         given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0, 1, 2, 3, 4));
@@ -76,14 +78,15 @@ class ArticleControllerTest {
                 .andExpect(view().name("articles/index"))
                 .andExpect(model().attributeExists("articles"))
                 .andExpect(model().attributeExists("paginationBarNumbers"))
-                .andExpect(model().attributeExists("searchTypes"));
+                .andExpect(model().attributeExists("searchTypes"))
+                .andExpect(model().attribute("searchTypeHashtag", SearchType.HASHTAG));
         then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
 
     @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 검색어와 함께 호출")
     @Test
-    public void givenSearchKeyword_whenSearchingArticlesView_thenReturnsArticlesView() throws Exception {
+    void givenSearchKeyword_whenSearchingArticlesView_thenReturnsArticlesView() throws Exception {
         // Given
         SearchType searchType = SearchType.TITLE;
         String searchValue = "title";
@@ -151,7 +154,7 @@ class ArticleControllerTest {
     @WithMockUser
     @DisplayName("[view][GET] 게시글 페이지 - 정상 호출, 인증된 사용자")
     @Test
-    void givenNothing_whenRequestingArticleView_thenReturnsArticleView() throws Exception {
+    void givenAuthorizedUser_whenRequestingArticleView_thenReturnsArticleView() throws Exception {
         // Given
         Long articleId = 1L;
         long totalCount = 1L;
@@ -165,8 +168,8 @@ class ArticleControllerTest {
                 .andExpect(view().name("articles/detail"))
                 .andExpect(model().attributeExists("article"))
                 .andExpect(model().attributeExists("articleComments"))
-                .andExpect(model().attributeExists("articleComments"))
-                .andExpect(model().attribute("totalCount", totalCount));
+                .andExpect(model().attribute("totalCount", totalCount))
+                .andExpect(model().attribute("searchTypeHashtag", SearchType.HASHTAG));
         then(articleService).should().getArticleWithComments(articleId);
         then(articleService).should().getArticleCount();
     }
@@ -248,7 +251,7 @@ class ArticleControllerTest {
                 .andExpect(model().attribute("formStatus", FormStatus.CREATE));
     }
 
-    @WithUserDetails(value = "roseTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = "unoTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("[view][POST] 새 게시글 등록 - 정상 호출")
     @Test
     void givenNewArticleInfo_whenRequesting_thenSavesNewArticle() throws Exception {
@@ -285,7 +288,7 @@ class ArticleControllerTest {
     @WithMockUser
     @DisplayName("[view][GET] 게시글 수정 페이지 - 정상 호출, 인증된 사용자")
     @Test
-    void givenNothing_whenRequesting_thenReturnsUpdatedArticlePage() throws Exception {
+    void givenAuthorizedUser_whenRequesting_thenReturnsUpdatedArticlePage() throws Exception {
         // Given
         long articleId = 1L;
         ArticleDto dto = createArticleDto();
@@ -300,8 +303,8 @@ class ArticleControllerTest {
                 .andExpect(model().attribute("formStatus", FormStatus.UPDATE));
         then(articleService).should().getArticle(articleId);
     }
-    
-    @WithUserDetails(value = "roseTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+
+    @WithUserDetails(value = "unoTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("[view][POST] 게시글 수정 - 정상 호출")
     @Test
     void givenUpdatedArticleInfo_whenRequesting_thenUpdatesNewArticle() throws Exception {
@@ -322,14 +325,14 @@ class ArticleControllerTest {
                 .andExpect(redirectedUrl("/articles/" + articleId));
         then(articleService).should().updateArticle(eq(articleId), any(ArticleDto.class));
     }
-    
-    @WithUserDetails(value = "roseTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+
+    @WithUserDetails(value = "unoTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("[view][POST] 게시글 삭제 - 정상 호출")
     @Test
     void givenArticleIdToDelete_whenRequesting_thenDeletesArticle() throws Exception {
         // Given
         long articleId = 1L;
-        String userId = "roseTest";
+        String userId = "unoTest";
         willDoNothing().given(articleService).deleteArticle(articleId, userId);
 
         // When & Then
@@ -353,7 +356,6 @@ class ArticleControllerTest {
                 Set.of(HashtagDto.of("java"))
         );
     }
-
     private ArticleWithCommentsDto createArticleWithCommentsDto() {
         return ArticleWithCommentsDto.of(
                 1L,
