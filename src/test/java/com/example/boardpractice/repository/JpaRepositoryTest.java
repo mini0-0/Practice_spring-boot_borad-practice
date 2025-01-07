@@ -1,6 +1,5 @@
 package com.example.boardpractice.repository;
 
-import com.example.boardpractice.config.JpaConfig;
 import com.example.boardpractice.domain.Article;
 import com.example.boardpractice.domain.Hashtag;
 import com.example.boardpractice.domain.UserAccount;
@@ -61,7 +60,7 @@ class JpaRepositoryTest {
     void givenTestData_whenInserting_thenWorksFine() {
         // Given
         long previousCount = articleRepository.count();
-        UserAccount userAccount = userAccountRepository.save(UserAccount.of("newUno", "pw", null, null, null));
+        UserAccount userAccount = userAccountRepository.save(UserAccount.of("newRose", "pw", null, null, null));
         Article article = Article.of(userAccount, "new article", "new content");
         article.addHashtags(Set.of(Hashtag.of("spring")));
 

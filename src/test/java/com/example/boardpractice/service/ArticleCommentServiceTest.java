@@ -128,7 +128,7 @@ class ArticleCommentServiceTest {
     void givenArticleCommentId_whenDeletingArticleComment_thenDeletesArticleComment() {
         // Given
         Long articleCommentId = 1L;
-        String userId = "uno";
+        String userId = "rose";
         willDoNothing().given(articleCommentRepository).deleteByIdAndUserAccount_UserId(articleCommentId, userId);
 
         // When
@@ -190,7 +190,7 @@ class ArticleCommentServiceTest {
                 "title",
                 "content"
         );
-        createArticle().addHashtags(Set.of(createHashtag(article)));
+        article.addHashtags(Set.of(createHashtag(article)));
 
         return article;
     }
