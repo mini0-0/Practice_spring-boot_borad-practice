@@ -1,6 +1,6 @@
 package com.example.boardpractice.controller;
 
-import com.example.boardpractice.config.SecurityConfig;
+import com.example.boardpractice.config.TestSecurityConfig;
 import com.example.boardpractice.service.ArticleService;
 import com.example.boardpractice.service.PaginationService;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @DisplayName("View 컨트롤러 - 인증")
-@Import(SecurityConfig.class)
+@Import(TestSecurityConfig.class)
 @WebMvcTest(AuthControllerTest.EmptyController.class)
 class AuthControllerTest {
     private final MockMvc mvc;
