@@ -104,8 +104,8 @@ public class ArticleService {
     public void deleteArticle(long articleId, String userId) {
         Article article = articleRepository.getReferenceById(articleId);
         Set<Long> hashtagIds = article.getHashtags().stream()
-                        .map(Hashtag::getId)
-                        .collect(Collectors.toUnmodifiableSet());
+                .map(Hashtag::getId)
+                .collect(Collectors.toUnmodifiableSet());
 
         articleRepository.deleteByIdAndUserAccount_UserId(articleId, userId);
         articleRepository.flush();
@@ -123,12 +123,14 @@ public class ArticleService {
             return Page.empty(pageable);
         }
 
-        return articleRepository.findByHashtagNames(List.of(hashtagName), pageable).map(ArticleDto::from);
+        return articleRepository.findByHashtagNames(List.of(hashtagName), pageable)
+                .map(ArticleDto::from);
     }
 
     public List<String> getHashtags() {
         return hashtagRepository.findAllHashtagNames(); // TODO: HashtagService 로 이동을 고려해보자.
     }
+
 
     private Set<Hashtag> renewHashtagsFromContent(String content) {
         Set<String> hashtagNamesInContent = hashtagService.parseHashtagNames(content);
@@ -145,5 +147,4 @@ public class ArticleService {
 
         return hashtags;
     }
-
 }
