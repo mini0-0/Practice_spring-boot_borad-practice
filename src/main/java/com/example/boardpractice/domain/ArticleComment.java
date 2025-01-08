@@ -19,6 +19,7 @@ import java.util.Set;
 
 @Entity
 public class ArticleComment extends AuditingFields{
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
