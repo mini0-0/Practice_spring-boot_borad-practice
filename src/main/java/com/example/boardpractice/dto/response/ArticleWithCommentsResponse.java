@@ -3,7 +3,6 @@ package com.example.boardpractice.dto.response;
 import com.example.boardpractice.dto.ArticleCommentDto;
 import com.example.boardpractice.dto.ArticleWithCommentsDto;
 import com.example.boardpractice.dto.HashtagDto;
-import com.example.boardpractice.dto.request.ArticleCommentRequest;
 
 import java.time.LocalDateTime;
 import java.util.*;
