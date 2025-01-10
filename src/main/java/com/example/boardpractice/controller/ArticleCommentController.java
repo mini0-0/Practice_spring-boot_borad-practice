@@ -1,7 +1,7 @@
 package com.example.boardpractice.controller;
 
 import com.example.boardpractice.dto.request.ArticleCommentRequest;
-import com.example.boardpractice.security.BoardPrincipal;
+import com.example.boardpractice.dto.security.BoardPrincipal;
 import com.example.boardpractice.service.ArticleCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -5,7 +5,7 @@ import com.example.boardpractice.domain.constant.SearchType;
 import com.example.boardpractice.dto.request.ArticleRequest;
 import com.example.boardpractice.dto.response.ArticleResponse;
 import com.example.boardpractice.dto.response.ArticleWithCommentsResponse;
-import com.example.boardpractice.security.BoardPrincipal;
+import com.example.boardpractice.dto.security.BoardPrincipal;
 import com.example.boardpractice.service.ArticleService;
 import com.example.boardpractice.service.PaginationService;
 import lombok.RequiredArgsConstructor;
