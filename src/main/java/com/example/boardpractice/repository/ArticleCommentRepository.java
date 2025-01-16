@@ -2,6 +2,7 @@ package com.example.boardpractice.repository;
 
 import com.example.boardpractice.domain.ArticleComment;
 import com.example.boardpractice.domain.QArticleComment;
+import com.example.boardpractice.domain.projection.ArticleCommentProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -15,7 +16,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-@RepositoryRestResource
+@RepositoryRestResource(excerptProjection = ArticleCommentProjection.class)
 public interface ArticleCommentRepository extends
         JpaRepository<ArticleComment, Long>,
         QuerydslPredicateExecutor<ArticleComment>,
