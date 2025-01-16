@@ -16,6 +16,7 @@ import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -211,13 +212,15 @@ class ArticleServiceTest {
         // Given
         ArticleDto dto = createArticleDto();
         Set<String> expectedHashtagNames = Set.of("java", "spring");
-        Set<Hashtag> expectedHashtags = new HashSet<>();
-        expectedHashtags.add(createHashtag("java"));
+        Set<Hashtag> expectedExistingHashtags = new HashSet<>();
+        expectedExistingHashtags.add(createHashtag("java"));
+        Article expectedArticle = createArticle();
+        ArgumentCaptor<Article> articleCaptor = ArgumentCaptor.forClass(Article.class);
 
         given(userAccountRepository.getReferenceById(dto.userAccountDto().userId())).willReturn(createUserAccount());
         given(hashtagService.parseHashtagNames(dto.content())).willReturn(expectedHashtagNames);
-        given(hashtagService.findHashtagsByNames(expectedHashtagNames)).willReturn(expectedHashtags);
-        given(articleRepository.save(any(Article.class))).willReturn(createArticle());
+        given(hashtagService.findHashtagsByNames(expectedHashtagNames)).willReturn(expectedExistingHashtags);
+        given(articleRepository.save(any(Article.class))).willReturn(expectedArticle);
 
         // When
         sut.saveArticle(dto);
@@ -226,7 +229,13 @@ class ArticleServiceTest {
         then(userAccountRepository).should().getReferenceById(dto.userAccountDto().userId());
         then(hashtagService).should().parseHashtagNames(dto.content());
         then(hashtagService).should().findHashtagsByNames(expectedHashtagNames);
-        then(articleRepository).should().save(any(Article.class));
+        then(articleRepository).should().save(articleCaptor.capture());
+        assertThat(articleCaptor.getValue())
+                .hasFieldOrPropertyWithValue("title", dto.title())
+                .hasFieldOrPropertyWithValue("content", dto.content())
+                .extracting("hashtags", as(InstanceOfAssertFactories.COLLECTION))
+                .extracting("hashtagName")
+                .containsExactlyInAnyOrderElementsOf(expectedHashtagNames);
     }
 
     @DisplayName("게시글의 수정 정보를 입력하면, 게시글을 수정한다.")
@@ -301,7 +310,7 @@ class ArticleServiceTest {
         then(hashtagService).shouldHaveNoInteractions();
     }
 
-    @DisplayName("게시글의 ID를 입력하면, 게시글을 삭제한다")
+    @DisplayName("게시글의 ID를 입력하면, 게시글을 삭제한다.")
     @Test
     void givenArticleId_whenDeletingArticle_thenDeletesArticle() {
         // Given
@@ -322,7 +331,7 @@ class ArticleServiceTest {
         then(hashtagService).should(times(2)).deleteHashtagWithoutArticles(any());
     }
 
-    @DisplayName("게시글 수를 조회하면, 게시글 수를 반환한다")
+    @DisplayName("게시글 수를 조회하면, 게시글 수를 반환한다.")
     @Test
     void givenNothing_whenCountingArticles_thenReturnsArticleCount() {
         // Given
@@ -337,7 +346,7 @@ class ArticleServiceTest {
         then(articleRepository).should().count();
     }
 
-    @DisplayName("해시태그를 조회하면, 유니크 해시태그 리스트를 반환한다")
+    @DisplayName("해시태그를 조회하면, 유니크 해시태그 리스트를 반환한다.")
     @Test
     void givenNothing_whenCalling_thenReturnsHashtags() {
         // Given
